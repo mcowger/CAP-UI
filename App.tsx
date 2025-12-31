@@ -12,6 +12,8 @@ import ConfigEditorPage from './components/management/ConfigEditorPage';
 import QuotaPage from './components/management/QuotaPage';
 import AuthFilesPage from './components/management/AuthFilesPage';
 import OAuthPage from './components/management/OAuthPage';
+import { ErrorBoundary } from './components/ErrorBoundary';
+import { useKeyboardShortcuts } from './hooks/useKeyboardShortcuts';
 import {
     BarGraph,
     Dashboard as DashboardIcon,
@@ -125,6 +127,42 @@ type ViewType =
 function App() {
     const [activeView, setActiveView] = useState<ViewType>('usage-analytics');
     const [sidebarOpen, setSidebarOpen] = useState(false);
+
+    // Keyboard shortcuts
+    useKeyboardShortcuts([
+        // Navigate to Usage Analytics (Ctrl/Cmd + 1)
+        {
+            key: '1',
+            ctrlKey: true,
+            handler: () => navigate('usage-analytics'),
+            description: 'Go to Usage Analytics'
+        },
+        // Navigate to Management Dashboard (Ctrl/Cmd + 2)
+        {
+            key: '2',
+            ctrlKey: true,
+            handler: () => navigate('management-dashboard'),
+            description: 'Go to Management Dashboard'
+        },
+        // Navigate to Settings (Ctrl/Cmd + ,)
+        {
+            key: ',',
+            ctrlKey: true,
+            handler: () => navigate('settings'),
+            description: 'Go to Settings'
+        },
+        // Close modals with Escape (handled globally)
+        {
+            key: 'Escape',
+            handler: () => {
+                // Close sidebar on mobile
+                if (sidebarOpen) {
+                    setSidebarOpen(false);
+                }
+            },
+            description: 'Close sidebar/modal'
+        }
+    ]);
 
     // Usage analytics state (existing Dashboard functionality)
     const [stats, setStats] = useState(null);
@@ -375,7 +413,9 @@ function App() {
 
                         {/* Main content */}
                         <main className="main-content">
-                            {renderView()}
+                            <ErrorBoundary key={activeView}>
+                                {renderView()}
+                            </ErrorBoundary>
                         </main>
                     </div>
                 </NotificationProvider>

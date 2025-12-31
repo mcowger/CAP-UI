@@ -685,3 +685,48 @@
     min-width: 300px;
   }
 }
+
+/* ===== Loading Skeleton Animation ===== */
+@keyframes skeleton-loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* ===== Accessibility - Focus Visible Styles ===== */
+*:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Skip to main content link (accessibility) */
+.skip-to-main {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--color-primary);
+  color: #000;
+  padding: 8px 16px;
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  z-index: 9999;
+}
+
+.skip-to-main:focus {
+  top: 8px;
+  left: 8px;
+}
