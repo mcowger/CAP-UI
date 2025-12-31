@@ -11,6 +11,7 @@ import {
   getRateLimits,
   saveRateLimits
 } from "./data-api";
+import { proxyManagementRequest } from "./management-proxy";
 
 export function createServer(
   config: Config,
@@ -160,6 +161,15 @@ export function createServer(
     fetch: (req) => {
       // Handle routes not matched above
       const url = new URL(req.url);
+
+      // Management API proxy - catch-all for /v0/management/*
+      if (url.pathname.startsWith("/v0/management")) {
+        return proxyManagementRequest(
+          req,
+          config.cliproxyUrl,
+          config.cliproxyManagementKey || ""
+        );
+      }
 
       // Health check endpoint
       if (url.pathname === "/api/collector/health" && req.method === "GET") {
