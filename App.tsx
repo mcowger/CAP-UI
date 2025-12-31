@@ -4,6 +4,10 @@ import { ConfigProvider } from './contexts/ConfigContext';
 import { NotificationProvider } from './contexts/NotificationContext';
 import { dbClient } from './lib/db-client';
 import Dashboard from './components/Dashboard';
+import SettingsPage from './components/management/SettingsPage';
+import ApiKeysPage from './components/management/ApiKeysPage';
+import ProvidersPage from './components/management/ProvidersPage';
+import ConfigEditorPage from './components/management/ConfigEditorPage';
 import {
     BarGraph,
     Dashboard as DashboardIcon,
@@ -297,11 +301,11 @@ function App() {
             case 'management-dashboard':
                 return <PlaceholderPage title="Management Dashboard" description="Quick overview of system status and statistics" />;
             case 'settings':
-                return <PlaceholderPage title="Basic Settings" description="Configure CLIProxy basic settings" />;
+                return <SettingsPage />;
             case 'api-keys':
-                return <PlaceholderPage title="API Keys" description="Manage proxy API keys" />;
+                return <ApiKeysPage />;
             case 'providers':
-                return <PlaceholderPage title="AI Providers" description="Configure Gemini, Codex, Claude, and OpenAI providers" />;
+                return <ProvidersPage />;
             case 'auth-files':
                 return <PlaceholderPage title="Auth Files" description="Upload and manage authentication files" />;
             case 'oauth':
@@ -309,7 +313,7 @@ function App() {
             case 'quota':
                 return <PlaceholderPage title="Quota Management" description="Monitor and manage API quotas" />;
             case 'config':
-                return <PlaceholderPage title="Config Editor" description="Edit CLIProxy YAML configuration" />;
+                return <ConfigEditorPage />;
             default:
                 return <PlaceholderPage title="Not Found" description="Page not found" />;
         }
