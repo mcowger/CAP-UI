@@ -35,10 +35,26 @@ export async function proxyManagementRequest(
         : undefined
     });
 
-    console.log(`[Management Proxy] ${req.method} ${endpoint}`);
+    console.log(`[Management Proxy] ${req.method} ${endpoint} -> ${targetUrl}`);
+
+    // Check if management key is configured
+    if (!managementKey || managementKey.trim() === '') {
+      console.error('[Management Proxy] Error: No management key configured');
+      return Response.json(
+        {
+          error: 'Configuration Error',
+          message: 'CLIPROXY_MANAGEMENT_KEY environment variable not set'
+        },
+        {
+          status: 500,
+          headers: { 'Content-Type': 'application/json' }
+        }
+      );
+    }
 
     // Forward request
     const response = await fetch(proxyReq);
+    console.log(`[Management Proxy] Response: ${response.status} ${response.statusText}`);
 
     // Handle 401 Unauthorized - transform to connection error
     if (response.status === 401) {

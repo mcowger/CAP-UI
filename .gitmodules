@@ -1,3 +1,5 @@
 [submodule "Cli-Proxy-API-Management-Center"]
 	path = Cli-Proxy-API-Management-Center
-	url = https://github.com/router-for-me/Cli-Proxy-API-Management-Center.git
+	url = https://github.com/mcowger/Cli-Proxy-API-Management-Center.git
+[submodule "submodule_name"]
+	branch = mcowger/claude-code-quotas

@@ -4,10 +4,14 @@ import { ConfigProvider } from './contexts/ConfigContext';
 import { NotificationProvider } from './contexts/NotificationContext';
 import { dbClient } from './lib/db-client';
 import Dashboard from './components/Dashboard';
+import ManagementDashboard from './components/management/ManagementDashboard';
 import SettingsPage from './components/management/SettingsPage';
 import ApiKeysPage from './components/management/ApiKeysPage';
 import ProvidersPage from './components/management/ProvidersPage';
 import ConfigEditorPage from './components/management/ConfigEditorPage';
+import QuotaPage from './components/management/QuotaPage';
+import AuthFilesPage from './components/management/AuthFilesPage';
+import OAuthPage from './components/management/OAuthPage';
 import {
     BarGraph,
     Dashboard as DashboardIcon,
@@ -299,7 +303,7 @@ function App() {
                     />
                 );
             case 'management-dashboard':
-                return <PlaceholderPage title="Management Dashboard" description="Quick overview of system status and statistics" />;
+                return <ManagementDashboard />;
             case 'settings':
                 return <SettingsPage />;
             case 'api-keys':
@@ -307,11 +311,11 @@ function App() {
             case 'providers':
                 return <ProvidersPage />;
             case 'auth-files':
-                return <PlaceholderPage title="Auth Files" description="Upload and manage authentication files" />;
+                return <AuthFilesPage />;
             case 'oauth':
-                return <PlaceholderPage title="OAuth Login" description="Configure OAuth provider authentication" />;
+                return <OAuthPage />;
             case 'quota':
-                return <PlaceholderPage title="Quota Management" description="Monitor and manage API quotas" />;
+                return <QuotaPage />;
             case 'config':
                 return <ConfigEditorPage />;
             default:
