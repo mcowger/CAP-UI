@@ -1,0 +1,64 @@
+# Dependencies
+node_modules/
+bun.lockb
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Database files (will be mounted as volume)
+data/
+*.db
+*.db-shm
+*.db-wal
+
+# Git files
+.git/
+.gitignore
+.gitattributes
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Testing
+coverage/
+.nyc_output/
+
+# Build artifacts
+dist/
+build/
+
+# Documentation
+README.md
+README-DOCKER.md
+CLAUDE.md
+docs/
+
+# Docker files (avoid recursion)
+Dockerfile
+.dockerignore
+docker-compose.yml
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Plan files
+.claude/

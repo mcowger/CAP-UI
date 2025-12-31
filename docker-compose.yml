@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  collector:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cliproxy-collector
+    restart: unless-stopped
+
+    # Environment variables
+    environment:
+      - CLIPROXY_URL=${CLIPROXY_URL:-http://host.docker.internal:8317}
+      - CLIPROXY_MANAGEMENT_KEY=${CLIPROXY_MANAGEMENT_KEY}
+      - COLLECTOR_INTERVAL_SECONDS=${COLLECTOR_INTERVAL_SECONDS:-300}
+      - COLLECTOR_TRIGGER_PORT=${COLLECTOR_TRIGGER_PORT:-5001}
+      - TIMEZONE_OFFSET_HOURS=${TIMEZONE_OFFSET_HOURS:-7}
+      - DB_PATH=/app/data/collector.db
+
+    # Port mapping
+    ports:
+      - "${COLLECTOR_TRIGGER_PORT:-5001}:5001"
+
+    # Volume mount for persistent SQLite database
+    volumes:
+      - ./data:/app/data
+
+    # Network configuration
+    # Use host.docker.internal to access services on host machine
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+    # Health check
+    healthcheck:
+      test: ["CMD", "bun", "run", "-e", "fetch('http://localhost:5001/api/collector/health').then(r => r.ok ? process.exit(0) : process.exit(1)).catch(() => process.exit(1))"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+    # Resource limits (optional, adjust as needed)
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 256M
+
+# Named volumes (alternative to bind mount)
+# Uncomment to use named volume instead of ./data bind mount
+# volumes:
+#   collector-data:
